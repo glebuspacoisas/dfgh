@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Gleb
+{
+    public partial class Form7 : Form
+    {
+        private Cotrydnik cotrydnik;
+        public Form7()
+        {
+            InitializeComponent();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string a = textBox1.Text;
+            string b = textBox2.Text;
+            SqlConnection conn = new SqlConnection(@"Data Source=SERVER_BIT\SQLEXPRESS;Initial Catalog=DEMO;User ID=user3;Password=userdb3");
+            String querry = "Select * From Сотрудники Where Логин=" + "'" + a + "'" + " And Пароль=" + "'" + b + "'";
+            SqlDataAdapter sda = new SqlDataAdapter(querry, conn);
+            DataTable dtable = new DataTable();
+            sda.Fill(dtable);
+            if (dtable.Rows.Count > 0)
+            {
+                cotrydnik = new Cotrydnik();
+                cotrydnik.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Логин или пароль введен не правильно");
+            }
+        }
+    }
+}
